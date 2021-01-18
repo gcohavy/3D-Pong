@@ -20,7 +20,7 @@
 /First Person Pong/[Aa]ssets/Plugins/Editor/JetBrains*
 
 # Visual Studio cache directory
-/First Person Pong/.vs/
+/First Person Pong/.vsCode/
 
 # Gradle cache directory
 /First Person Pong/.gradle/
