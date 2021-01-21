@@ -5,6 +5,9 @@ using UnityEngine;
 public class UIManager : Singleton<UIManager>
 {
     [SerializeField] private EndGameMenu _endGameMenu;
+    [SerializeField] private MainMenu _mainMenu;
+    [SerializeField] private OptionsMenu _optionsMenu;
+    [SerializeField] private PregameMenu _pregameMenu;
 
     void Start()
     {
@@ -18,5 +21,13 @@ public class UIManager : Singleton<UIManager>
         {
             _endGameMenu.GameLost();
         }
+    }
+
+    //Button actions
+
+    //Main Menu
+    public void StartButton()
+    {
+        _mainMenu.SlideUp();
     }
 }
