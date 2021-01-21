@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BallController : MonoBehaviour
 {
-    private Vector3 velocity = new Vector3();
+    [SerializeField] private AudioSource soundsPlayer;
+    private float startTimeAudio = 0.3f;
+
+    private Vector3 velocity = new Vector3(0,0,0);
     private Rigidbody ballRb;
     private float zBoundaries = 10;
 
@@ -12,8 +15,10 @@ public class BallController : MonoBehaviour
     void Start()
     {
         ballRb = gameObject.GetComponent<Rigidbody>();
+
+        GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
+
         ResetBall();
-        MoveBall();
     }
 
     // Update is called once per frame
@@ -35,11 +40,6 @@ public class BallController : MonoBehaviour
         }
     }
 
-    Vector3 ReturnRandomVelocity()
-    {
-        return new Vector3(Random.Range(0,10.0f), 0, Random.Range(0, 10.0f));
-    }
-
     public void ResetBall()
     {
         velocity = Vector3.zero;
@@ -48,12 +48,14 @@ public class BallController : MonoBehaviour
 
     public void MoveBall()
     {
-        velocity = ReturnRandomVelocity();
-        GameManager.Instance.UpdateState(GameManager.GameState.RUNNING);
+        velocity = new Vector3(Random.Range(0,10.0f), 0, Random.Range(0, 10.0f));
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        soundsPlayer.time= startTimeAudio;
+        soundsPlayer.Play();
+        
         switch (collision.gameObject.name)
         {
             case "PlayerPaddle": 
@@ -66,6 +68,14 @@ public class BallController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    void HandleGameStateChange(GameManager.GameState currentState, GameManager.GameState previousState)
+    {
+        if(currentState == GameManager.GameState.RUNNING)
+        {
+            MoveBall();
         }
     }
 }

@@ -4,15 +4,34 @@ using UnityEngine;
 
 public class OptionsMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Animation _optionsMenuAnimation;
+    [SerializeField] private AnimationClip _slideInAnimation;
+    [SerializeField] private AnimationClip _slideOutAnimation;
+
+    public void SlideIn()
     {
-        
+        gameObject.SetActive(true);
+        _optionsMenuAnimation.Stop();
+        _optionsMenuAnimation.clip = _slideInAnimation;
+        _optionsMenuAnimation.Play();
+    }
+    
+    public void SlideOut()
+    {
+        _optionsMenuAnimation.Stop();
+        _optionsMenuAnimation.clip = _slideOutAnimation;
+        _optionsMenuAnimation.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnSlideInAnimationComplete()
     {
-        
+        Debug.Log("Slide in complete...");
+        //fire event for main menu to deactivate
+    }
+
+    public void OnSlideOutAnimationComplete()
+    {
+        Debug.Log("Slide out complete...");
+        gameObject.SetActive(false);
     }
 }

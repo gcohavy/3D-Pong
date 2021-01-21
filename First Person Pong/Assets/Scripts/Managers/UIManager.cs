@@ -21,6 +21,10 @@ public class UIManager : Singleton<UIManager>
         {
             _endGameMenu.GameLost();
         }
+        else if (currentState == GameManager.GameState.RUNNING)
+        {
+            _pregameMenu.gameObject.SetActive(false);
+        }
     }
 
     //Button actions
@@ -28,6 +32,24 @@ public class UIManager : Singleton<UIManager>
     //Main Menu
     public void StartButton()
     {
+        _pregameMenu.gameObject.SetActive(true);
         _mainMenu.SlideUp();
+    }
+
+    public void OptionsButton()
+    {
+        _optionsMenu.SlideIn();
+    }
+
+    //Options Menu
+    public void BackButton()
+    {
+        _optionsMenu.SlideOut();
+    }
+
+    //Pregame menu
+    public void BeginButton()
+    {
+        GameManager.Instance.UpdateState(GameManager.GameState.RUNNING);
     }
 }

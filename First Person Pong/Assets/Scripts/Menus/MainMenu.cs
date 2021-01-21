@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
     
     public void SlideDown()
     {
+        gameObject.SetActive(true);
         _mainMenuAnimation.Stop();
         _mainMenuAnimation.clip = _slideDownAnimation;
         _mainMenuAnimation.Play();
@@ -31,6 +32,7 @@ public class MainMenu : MonoBehaviour
     public void OnSlideUpAnimationComplete()
     {
         Debug.Log("Slide up complete...");
+        gameObject.SetActive(false);
     }
     
     public void OnSlideDownAnimationComplete()
