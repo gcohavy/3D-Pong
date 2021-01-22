@@ -34,6 +34,7 @@ public class UIManager : Singleton<UIManager>
     {
         _pregameMenu.gameObject.SetActive(true);
         _mainMenu.SlideUp();
+        GameManager.Instance.PlayInGameMusic();
     }
 
     public void OptionsButton()
