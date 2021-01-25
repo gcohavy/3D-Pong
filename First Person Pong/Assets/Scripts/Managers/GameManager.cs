@@ -11,7 +11,15 @@ public class GameManager : Singleton<GameManager>
         GAMEOVER
     }
 
+    public enum Difficulty
+    {
+        EASY,
+        MEDIUM,
+        HARD
+    }
+
     GameState _currentGameState = GameState.PREGAME;
+    Difficulty _currentDifficulty = Difficulty.MEDIUM;
 
     [SerializeField] private AudioSource _backgroundMusicSource;
     [SerializeField] private AudioClip _mainMenuMusic;
@@ -19,11 +27,18 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private AudioClip _gameOverMusic;
 
     public Events.EventGameStateChange OnGameStateChange;
+    public Events.EventDifficultyChange OnDifficultyChange;
 
     public GameState CurrentGameState
     {
         get { return _currentGameState;}
         private set {_currentGameState = value; }
+    }
+
+    public Difficulty CurrentDifficulty
+    {
+        get { return _currentDifficulty; }
+        private set {_currentDifficulty = value; }
     }
 
     void Start()
@@ -42,6 +57,12 @@ public class GameManager : Singleton<GameManager>
         {
             PlayGameOverMusic();
         }
+    }
+
+    public void UpdateDifficulty(Difficulty difficulty)
+    {
+        CurrentDifficulty = difficulty;
+        OnDifficultyChange.Invoke(CurrentDifficulty);
     }
 
     protected override void OnDestroy()

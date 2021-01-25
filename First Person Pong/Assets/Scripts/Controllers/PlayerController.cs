@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float speed = 12;
+    private float speed = 15;
     private float xBound = 5.5f;
+    private Vector3 startingPosition = new Vector3 (0,0,10);
+
+    void Start()
+    {
+        GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,5 +31,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         
+    }
+
+    void HandleGameStateChange(GameManager.GameState currentState, GameManager.GameState previousState)
+    {
+        if(previousState == GameManager.GameState.GAMEOVER && currentState == GameManager.GameState.PREGAME)
+        {
+            transform.position = startingPosition;
+        }
     }
 }

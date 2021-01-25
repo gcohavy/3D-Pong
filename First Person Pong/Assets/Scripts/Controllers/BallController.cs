@@ -10,6 +10,7 @@ public class BallController : MonoBehaviour
     private Vector3 velocity = new Vector3(0,0,0);
     private Rigidbody ballRb;
     private float zBoundaries = 10;
+    public float speedStepUp = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +18,7 @@ public class BallController : MonoBehaviour
         ballRb = gameObject.GetComponent<Rigidbody>();
 
         GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
+        GameManager.Instance.OnDifficultyChange.AddListener(HandleDifficultyChange);
 
         ResetBall();
     }
@@ -48,17 +50,21 @@ public class BallController : MonoBehaviour
 
     public void MoveBall()
     {
-        velocity = new Vector3(Random.Range(0,10.0f), 0, Random.Range(0, 10.0f));
+        velocity = new Vector3(Random.Range(0,5.0f), 0, Random.Range(5, 10.0f));
     }
 
     void OnCollisionEnter(Collision collision)
     {
         soundsPlayer.time= startTimeAudio;
         soundsPlayer.Play();
-        
+
         switch (collision.gameObject.name)
         {
             case "PlayerPaddle": 
+                velocity.z += velocity.z > 0 ? speedStepUp : -speedStepUp;
+                velocity.x += velocity.x > 0 ? speedStepUp : -speedStepUp;
+                velocity.z = -velocity.z;
+                break;
             case "EnemyPaddle":
                 velocity.z = -velocity.z;
                 break;
@@ -76,6 +82,27 @@ public class BallController : MonoBehaviour
         if(currentState == GameManager.GameState.RUNNING)
         {
             MoveBall();
+        }
+    }
+
+    void HandleDifficultyChange(GameManager.Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case GameManager.Difficulty.EASY:
+                speedStepUp = 0.1f;
+                transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                break;
+            case GameManager.Difficulty.MEDIUM:
+                speedStepUp = 0.5f;
+                transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+                break;
+            case GameManager.Difficulty.HARD:
+                speedStepUp = 0.7f;
+                transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
+                break;
+            default:
+                break;
         }
     }
 }

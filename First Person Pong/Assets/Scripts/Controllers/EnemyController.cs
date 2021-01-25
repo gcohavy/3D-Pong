@@ -6,12 +6,14 @@ public class EnemyController : MonoBehaviour
 {
     GameObject gameBall;
     Rigidbody ballRb;
-    public float speed = 10;
+    public float speed = 4.5f;
     // Start is called before the first frame update
     void Start()
     {
         gameBall = GameObject.Find("Ball");
         ballRb = gameBall.GetComponent<Rigidbody>();
+
+        GameManager.Instance.OnDifficultyChange.AddListener(HandleDifficultyChange);
     }
 
     // Update is called once per frame
@@ -26,6 +28,24 @@ public class EnemyController : MonoBehaviour
             {
                 transform.Translate(Vector3.right * Time.deltaTime * speed);
             }
+        }
+    }
+
+    void HandleDifficultyChange(GameManager.Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case GameManager.Difficulty.EASY:
+                speed = 4;
+                break;
+            case GameManager.Difficulty.MEDIUM:
+                speed = 5;
+                break;
+            case GameManager.Difficulty.HARD:
+                speed = 7.5f;;
+                break;
+            default:
+                break;
         }
     }
 }

@@ -32,7 +32,7 @@ public class UIManager : Singleton<UIManager>
     //Main Menu
     public void StartButton()
     {
-        _pregameMenu.gameObject.SetActive(true);
+        _pregameMenu.SetBackToActive();
         _mainMenu.SlideUp();
         GameManager.Instance.PlayInGameMusic();
     }
@@ -42,15 +42,51 @@ public class UIManager : Singleton<UIManager>
         _optionsMenu.SlideIn();
     }
 
+    public void ExitButton()
+    {
+        Application.Quit();
+    }
+
     //Options Menu
     public void BackButton()
     {
         _optionsMenu.SlideOut();
     }
 
+    //--Difficulty buttons--
+    public void EasyDifficulty()
+    {
+        GameManager.Instance.UpdateDifficulty(GameManager.Difficulty.EASY);
+    }
+    public void MediumDifficulty()
+    {
+        GameManager.Instance.UpdateDifficulty(GameManager.Difficulty.MEDIUM);
+    }
+    public void HardDifficulty()
+    {
+        GameManager.Instance.UpdateDifficulty(GameManager.Difficulty.HARD);
+    }
+
     //Pregame menu
     public void BeginButton()
     {
-        GameManager.Instance.UpdateState(GameManager.GameState.RUNNING);
+        _pregameMenu.BeginCountdown();
+    }
+
+    //EndgameMenu
+    public void RestartButton()
+    {
+        _pregameMenu.SetBackToActive();
+        _endGameMenu.gameObject.SetActive(false);
+        GameManager.Instance.PlayInGameMusic();
+        GameManager.Instance.UpdateState(GameManager.GameState.PREGAME);
+    }
+
+    public void ExitToMainButton()
+    {
+        _endGameMenu.gameObject.SetActive(false);
+        _mainMenu.SlideDown();
+        GameManager.Instance.PlayMainMenuMusic();
+        GameManager.Instance.UpdateState(GameManager.GameState.PREGAME);
     }
 }

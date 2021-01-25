@@ -1,18 +1,31 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PregameMenu : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Animation _pregameAnimation;
+    [SerializeField] private AnimationClip _countdown;
+    [SerializeField] private Button _beginButton;
+
+    public void BeginCountdown()
     {
-        
+        _beginButton.gameObject.SetActive(false);
+        _pregameAnimation.Stop();
+        _pregameAnimation.clip = _countdown;
+        _pregameAnimation.Play();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnCountdownAnimationComplete()
     {
-        
+        GameManager.Instance.UpdateState(GameManager.GameState.RUNNING);
+    }
+
+    public void SetBackToActive()
+    {
+        gameObject.SetActive(true);
+        _beginButton.gameObject.SetActive(true);
     }
 }
