@@ -26,6 +26,9 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private AudioClip _inGameMusic;
     [SerializeField] private AudioClip _gameOverMusic;
 
+    [SerializeField] private Animation _backgroundAnimationComponent;
+    [SerializeField] private AnimationClip _backgroundAnimation;
+
     public Events.EventGameStateChange OnGameStateChange;
     public Events.EventDifficultyChange OnDifficultyChange;
 
@@ -89,5 +92,17 @@ public class GameManager : Singleton<GameManager>
         _backgroundMusicSource.Stop();
         _backgroundMusicSource.clip = _gameOverMusic;
         _backgroundMusicSource.Play();
+    }
+
+    public void BeginBackgroundAnimation()
+    {
+        _backgroundAnimationComponent.Stop();
+        _backgroundAnimationComponent.clip = _backgroundAnimation;
+        _backgroundAnimationComponent.Play();
+    }
+
+    public void StopBackgroundAnimation()
+    {
+        _backgroundAnimationComponent.Stop();
     }
 }

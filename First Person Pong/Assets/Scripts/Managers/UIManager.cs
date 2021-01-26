@@ -37,6 +37,7 @@ public class UIManager : Singleton<UIManager>
         _pregameMenu.SetBackToActive();
         _mainMenu.SlideUp();
         GameManager.Instance.PlayInGameMusic();
+        GameManager.Instance.BeginBackgroundAnimation();
     }
 
     public void OptionsButton()
@@ -95,6 +96,7 @@ public class UIManager : Singleton<UIManager>
         _mainMenu.SlideDown();
         GameManager.Instance.PlayMainMenuMusic();
         GameManager.Instance.UpdateState(GameManager.GameState.PREGAME);
+        GameManager.Instance.StopBackgroundAnimation();
     }
 
     //About Section
