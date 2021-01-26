@@ -30,14 +30,12 @@ public class BallController : MonoBehaviour
 
         if(transform.position.z > zBoundaries)
         {
-            Debug.Log("> than z boundary");
-            GameManager.Instance.UpdateState(GameManager.GameState.GAMEOVER);
+            UIManager.Instance.GameOver(false);
             ResetBall();
         }
         if(transform.position.z < -zBoundaries)
         {
-            Debug.Log("< z Boundary");
-            GameManager.Instance.UpdateState(GameManager.GameState.GAMEOVER);
+            UIManager.Instance.GameOver(true);
             ResetBall();
         }
     }

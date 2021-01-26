@@ -8,6 +8,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private AnimationClip _slideUpAnimation;
     [SerializeField] private AnimationClip _slideDownAnimation;
     [SerializeField] private AnimationClip _titleAnimation;
+    [SerializeField] private AnimationClip _menuOptionsFadeOutAnimation;
+    [SerializeField] private AnimationClip _menuOptionsFadeInAnimation;
+    [SerializeField] private AnimationClip _aboutMenuFadeOutAnimation;
+    [SerializeField] private AnimationClip _aboutMenuFadeInAnimation;
+
+    [SerializeField] private GameObject _menuOptions;
+    [SerializeField] private GameObject _aboutMenu;
 
     void Start()
     {
@@ -29,15 +36,67 @@ public class MainMenu : MonoBehaviour
         _mainMenuAnimation.Play();
     }
 
+    public void MenuOptionsFadeOut()
+    {
+        _mainMenuAnimation.Stop();
+        _mainMenuAnimation.clip = _menuOptionsFadeOutAnimation;
+        _mainMenuAnimation.Play();
+    }
+
+    public void MenuOptionsFadeIn()
+    {
+        _mainMenuAnimation.Stop();
+        _mainMenuAnimation.clip = _menuOptionsFadeInAnimation;
+        _mainMenuAnimation.Play();
+    }
+
+    public void AboutMenuFadeOut()
+    {
+        _mainMenuAnimation.Stop();
+        _mainMenuAnimation.clip = _aboutMenuFadeOutAnimation;
+        _mainMenuAnimation.Play();
+    }
+
+    public void AboutMenuFadeIn()
+    {
+        _mainMenuAnimation.Stop();
+        _mainMenuAnimation.clip = _aboutMenuFadeInAnimation;
+        _mainMenuAnimation.Play();
+    }
+
     public void OnSlideUpAnimationComplete()
     {
-        Debug.Log("Slide up complete...");
+        //Debug.Log("Slide up complete...");
         gameObject.SetActive(false);
     }
     
     public void OnSlideDownAnimationComplete()
     {
-        Debug.Log("Slide down complete...");
+        //Debug.Log("Slide down complete...");
+        BeginTitleAnimation();
+    }
+
+    public void OnMenuOptionsFadeOutComplete()
+    {
+        _menuOptions.gameObject.SetActive(false);
+        AboutMenuFadeIn();
+    }
+
+    public void OnMenuOptionsFadeInComplete()
+    {
+        //possibly do something once the menu is back
+        BeginTitleAnimation();
+    }
+
+    public void OnAboutMenuFadeOutComplete()
+    {
+        _aboutMenu.gameObject.SetActive(false);
+        MenuOptionsFadeIn();
+    }
+
+    public void OnAboutMenuFadeInComplete()
+    {
+        //Possibly do something
         BeginTitleAnimation();
     }
 

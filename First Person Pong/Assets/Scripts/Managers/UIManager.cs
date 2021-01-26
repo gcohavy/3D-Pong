@@ -14,14 +14,16 @@ public class UIManager : Singleton<UIManager>
         GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
     }
 
+    //Handle Game over
+    public void GameOver(bool won)
+    {
+        if(won) _endGameMenu.GameWon();
+        else _endGameMenu.GameLost();
+    }
+
     void HandleGameStateChange(GameManager.GameState currentState, GameManager.GameState previousState)
     {
-        //Handle when the game ends
-        if(currentState == GameManager.GameState.GAMEOVER && previousState == GameManager.GameState.RUNNING)
-        {
-            _endGameMenu.GameLost();
-        }
-        else if (currentState == GameManager.GameState.RUNNING)
+        if (currentState == GameManager.GameState.RUNNING)
         {
             _pregameMenu.gameObject.SetActive(false);
         }
@@ -40,6 +42,11 @@ public class UIManager : Singleton<UIManager>
     public void OptionsButton()
     {
         _optionsMenu.SlideIn();
+    }
+
+    public void AboutButton()
+    {
+        _mainMenu.MenuOptionsFadeOut();
     }
 
     public void ExitButton()
@@ -77,16 +84,22 @@ public class UIManager : Singleton<UIManager>
     public void RestartButton()
     {
         _pregameMenu.SetBackToActive();
-        _endGameMenu.gameObject.SetActive(false);
+        _endGameMenu.ResetInactive();
         GameManager.Instance.PlayInGameMusic();
         GameManager.Instance.UpdateState(GameManager.GameState.PREGAME);
     }
 
     public void ExitToMainButton()
     {
-        _endGameMenu.gameObject.SetActive(false);
+        _endGameMenu.ResetInactive();
         _mainMenu.SlideDown();
         GameManager.Instance.PlayMainMenuMusic();
         GameManager.Instance.UpdateState(GameManager.GameState.PREGAME);
+    }
+
+    //About Section
+    public void AboutBackButton()
+    {
+        _mainMenu.AboutMenuFadeOut();
     }
 }
