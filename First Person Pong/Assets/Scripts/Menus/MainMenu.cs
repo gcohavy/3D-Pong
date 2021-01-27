@@ -66,13 +66,13 @@ public class MainMenu : MonoBehaviour
 
     public void OnSlideUpAnimationComplete()
     {
-        //Debug.Log("Slide up complete...");
+        Debug.Log("Slide up complete...");
         gameObject.SetActive(false);
     }
     
     public void OnSlideDownAnimationComplete()
     {
-        //Debug.Log("Slide down complete...");
+        Debug.Log("Slide down complete...");
         BeginTitleAnimation();
     }
 

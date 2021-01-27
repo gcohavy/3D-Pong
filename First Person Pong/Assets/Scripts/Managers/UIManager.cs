@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
@@ -8,6 +9,10 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private MainMenu _mainMenu;
     [SerializeField] private OptionsMenu _optionsMenu;
     [SerializeField] private PregameMenu _pregameMenu;
+
+    [SerializeField] private Slider _volumeSlider;
+
+    //Events.EventVolumeChange OnVolumeChanged;
 
     void Start()
     {
@@ -34,6 +39,7 @@ public class UIManager : Singleton<UIManager>
     //Main Menu
     public void StartButton()
     {
+        //Debug.Log("Animation being called...");
         _pregameMenu.SetBackToActive();
         _mainMenu.SlideUp();
         GameManager.Instance.PlayInGameMusic();
@@ -61,6 +67,12 @@ public class UIManager : Singleton<UIManager>
         _optionsMenu.SlideOut();
     }
 
+    public void SetVolume()
+    {
+        //OnVolumeChanged.Invoke(value);
+        GameManager.Instance.SetVolume(_volumeSlider.value);
+    }
+
     //--Difficulty buttons--
     public void EasyDifficulty()
     {
@@ -76,10 +88,12 @@ public class UIManager : Singleton<UIManager>
     }
 
     //Pregame menu
+    ///* No longer a clickable button
     public void BeginButton()
     {
         _pregameMenu.BeginCountdown();
     }
+    //*/
 
     //EndgameMenu
     public void RestartButton()

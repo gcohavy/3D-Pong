@@ -10,6 +10,15 @@ public class PregameMenu : MonoBehaviour
     [SerializeField] private AnimationClip _countdown;
     [SerializeField] private Button _beginButton;
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Countdown beginning...");
+            BeginCountdown();
+        }
+    }
+
     public void BeginCountdown()
     {
         _beginButton.gameObject.SetActive(false);
@@ -20,6 +29,7 @@ public class PregameMenu : MonoBehaviour
 
     public void OnCountdownAnimationComplete()
     {
+        gameObject.SetActive(false);
         GameManager.Instance.UpdateState(GameManager.GameState.RUNNING);
     }
 

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
+        GameManager.Instance.OnDifficultyChange.AddListener(HandleDifficultyChange);
     }
 
     // Update is called once per frame
@@ -38,6 +39,24 @@ public class PlayerController : MonoBehaviour
         if(previousState == GameManager.GameState.GAMEOVER && currentState == GameManager.GameState.PREGAME)
         {
             transform.position = startingPosition;
+        }
+    }
+
+    void HandleDifficultyChange(GameManager.Difficulty difficulty)
+    {
+        switch (difficulty)
+        {
+            case GameManager.Difficulty.EASY:
+                transform.localScale = new Vector3(3, 1 , 0.5f);
+                break;
+            case GameManager.Difficulty.MEDIUM:
+                transform.localScale = new Vector3(2.5f, 1 , 0.5f);
+                break;
+            case GameManager.Difficulty.HARD:
+                transform.localScale = new Vector3(2, 1 , 0.5f);
+                break;
+            default:
+                break;
         }
     }
 }

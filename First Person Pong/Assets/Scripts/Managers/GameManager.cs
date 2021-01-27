@@ -105,4 +105,9 @@ public class GameManager : Singleton<GameManager>
     {
         _backgroundAnimationComponent.Stop();
     }
+
+    public void SetVolume(float value)
+    {
+        _backgroundMusicSource.volume = value;
+    }
 }
