@@ -9,6 +9,7 @@
 /First Person Pong/[Bb]uilds/
 /First Person Pong/[Ll]ogs/
 /First Person Pong/[Mm]emoryCaptures/
+/First Person Pong/[Aa]ssets/AssetStorePackages/
 
 # Asset meta data should only be ignored when the corresponding asset is also ignored
 !/First Person Pong/[Aa]ssets/**/*.meta
