@@ -49,13 +49,13 @@ public class EnemyController : MonoBehaviour
         switch (difficulty)
         {
             case GameManager.Difficulty.EASY:
-                speed = 4;
+                speed = 3.5f;
                 break;
             case GameManager.Difficulty.MEDIUM:
                 speed = 5;
                 break;
             case GameManager.Difficulty.HARD:
-                speed = 7.5f;;
+                speed = 7.5f;
                 break;
             default:
                 break;
