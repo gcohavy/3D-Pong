@@ -1,4 +1,9 @@
-﻿using UnityEngine;
+﻿/// <summary>
+/// This class serves as a template for classes like the GameManager which can only 
+///  have a single instance
+/// </summary>
+
+using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : Singleton<T>
 {

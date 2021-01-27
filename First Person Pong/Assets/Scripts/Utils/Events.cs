@@ -1,4 +1,10 @@
-﻿using UnityEngine.Events;
+﻿/// <summary>
+/// This class serves to put all Game events in a single class
+/// This would be more useful if the game needed to be bigger, but for now it
+///  is just a good habit
+/// </summary>
+
+using UnityEngine.Events;
 
 public class Events 
 {

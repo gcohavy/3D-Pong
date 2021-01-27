@@ -1,21 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿/// <summary>
+/// This class serves to manage all the different menus and how they should animate
+///  and appear according to input
+/// This class will also serve for every method associated with any button in a Menu
+/// </summary>
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    //Get references to all menus
     [SerializeField] private EndGameMenu _endGameMenu;
     [SerializeField] private MainMenu _mainMenu;
     [SerializeField] private OptionsMenu _optionsMenu;
     [SerializeField] private PregameMenu _pregameMenu;
 
-    [SerializeField] private Slider _volumeSlider;
+    //Get reference to volume slider
+    [SerializeField] private UnityEngine.UI.Slider _volumeSlider;
 
     //Events.EventVolumeChange OnVolumeChanged;
 
     void Start()
     {
+        //Subscribe to the State Change event
         GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
     }
 
@@ -26,6 +31,7 @@ public class UIManager : Singleton<UIManager>
         else _endGameMenu.GameLost();
     }
 
+    //Deactivate the pregame menu if the GameState was changed to RUNNING
     void HandleGameStateChange(GameManager.GameState currentState, GameManager.GameState previousState)
     {
         if (currentState == GameManager.GameState.RUNNING)
@@ -39,6 +45,7 @@ public class UIManager : Singleton<UIManager>
     //Main Menu
     public void StartButton()
     {
+        //Set the Pregame Menu to active and Move the Main Menu out of the way
         //Debug.Log("Animation being called...");
         _pregameMenu.SetBackToActive();
         _mainMenu.SlideUp();
@@ -58,6 +65,7 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitButton()
     {
+        //Since this is not an actual application, this serves as more of a placeholder
         Application.Quit();
     }
 
@@ -74,6 +82,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     //--Difficulty buttons--
+    //These could be consolidated
     public void EasyDifficulty()
     {
         GameManager.Instance.UpdateDifficulty(GameManager.Difficulty.EASY);
@@ -88,7 +97,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     //Pregame menu
-    ///* No longer a clickable button
+    ///* No longer supposed to be clicked but ok to leave functionality
     public void BeginButton()
     {
         _pregameMenu.BeginCountdown();
@@ -98,6 +107,7 @@ public class UIManager : Singleton<UIManager>
     //EndgameMenu
     public void RestartButton()
     {
+        //Bring the player back to the pregame screen
         _pregameMenu.SetBackToActive();
         _endGameMenu.ResetInactive();
         GameManager.Instance.PlayInGameMusic();
@@ -106,6 +116,8 @@ public class UIManager : Singleton<UIManager>
 
     public void ExitToMainButton()
     {
+        //Reset the game back to its menu state
+        //Note that on a larger scale, this method would need to be rewritten
         _endGameMenu.ResetInactive();
         _mainMenu.SlideDown();
         GameManager.Instance.PlayMainMenuMusic();
