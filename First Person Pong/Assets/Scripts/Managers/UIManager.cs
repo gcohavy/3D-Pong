@@ -47,7 +47,6 @@ public class UIManager : Singleton<UIManager>
     {
         //Set the Pregame Menu to active and Move the Main Menu out of the way
         //Debug.Log("Animation being called...");
-        _pregameMenu.SetBackToActive();
         _mainMenu.SlideUp();
         GameManager.Instance.PlayInGameMusic();
         GameManager.Instance.BeginBackgroundAnimation();
@@ -129,5 +128,11 @@ public class UIManager : Singleton<UIManager>
     public void AboutBackButton()
     {
         _mainMenu.AboutMenuFadeOut();
+    }
+
+    //Set the pregame menu to active
+    public void SetPregameMenuActive()
+    {
+        _pregameMenu.SetBackToActive();
     }
 }

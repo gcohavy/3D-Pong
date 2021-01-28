@@ -88,6 +88,7 @@ public class MainMenu : MonoBehaviour
     {
         //Debug.Log("Slide up complete...");
         gameObject.SetActive(false);
+        StartPregameContextAnimation();
     }
     
     //Animate title text after the menu slides in
@@ -133,5 +134,19 @@ public class MainMenu : MonoBehaviour
         _mainMenuAnimation.Stop();
         _mainMenuAnimation.clip = _titleAnimation;
         _mainMenuAnimation.Play();
+    }
+
+    //Additional functionality added to work the pregame animation for context
+    
+    //Get animation variables for the context animation
+    [SerializeField] private Animation _cameraAnimationComponent;
+    [SerializeField] private AnimationClip _pregameContextAnimation;
+
+    void StartPregameContextAnimation()
+    {
+        //Debug.Log("Starting context animation...");
+        _cameraAnimationComponent.Stop();
+        _cameraAnimationComponent.clip = _pregameContextAnimation;
+        _cameraAnimationComponent.Play();
     }
 }

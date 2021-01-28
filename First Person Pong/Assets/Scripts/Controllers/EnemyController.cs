@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     Rigidbody ballRb;
     //Set a default speed
     public float speed = 4.5f;
+    //Store original position as hardcoded value
+    private Vector3 originalPosition = new Vector3(0,0,-10);
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +23,9 @@ public class EnemyController : MonoBehaviour
         gameBall = GameObject.Find("Ball");
         ballRb = gameBall.GetComponent<Rigidbody>();
 
-        //Handle a difficulty change
+        //Handle a difficulty change or GameState change 
         GameManager.Instance.OnDifficultyChange.AddListener(HandleDifficultyChange);
+        GameManager.Instance.OnGameStateChange.AddListener(HandleGameStateChange);
     }
 
     // Update is called once per frame
@@ -59,6 +62,14 @@ public class EnemyController : MonoBehaviour
                 break;
             default:
                 break;
+        }
+    }
+
+    void HandleGameStateChange(GameManager.GameState currentState, GameManager.GameState previousState)
+    {
+        if(currentState == GameManager.GameState.PREGAME && previousState == GameManager.GameState.GAMEOVER)
+        {
+            transform.position = originalPosition;
         }
     }
 }
